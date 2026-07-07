@@ -179,7 +179,8 @@ func (c *Client) GetIssue(owner, repo string, number int) (*Issue, error) {
 }
 
 type EditIssueRequest struct {
-	State string `json:"state"`
+	State string `json:"state,omitempty"`
+	Body  string `json:"body,omitempty"`
 }
 
 func (c *Client) EditIssue(owner, repo string, number int, req EditIssueRequest) (*Issue, error) {
