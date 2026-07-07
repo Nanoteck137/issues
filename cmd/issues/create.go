@@ -104,6 +104,13 @@ func init() {
 	rootCmd.AddCommand(createCmd)
 }
 
+func unescape(s string) string {
+	s = strings.ReplaceAll(s, "\\n", "\n")
+	s = strings.ReplaceAll(s, "\\t", "\t")
+	s = strings.ReplaceAll(s, "\\\\", "\\")
+	return s
+}
+
 func isStdinPiped() bool {
 	fi, err := os.Stdin.Stat()
 	if err != nil {
@@ -115,7 +122,7 @@ func isStdinPiped() bool {
 func resolveBody(title string) (string, error) {
 	switch {
 	case bodyFlag != "":
-		return bodyFlag, nil
+		return unescape(bodyFlag), nil
 
 	case bodyFileFlag != "":
 		data, err := os.ReadFile(bodyFileFlag)
